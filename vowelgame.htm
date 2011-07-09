@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+var currentLetter;
+var currentPoints;
+var points = 0;
+var gameInProgress = true;
+var currentPointsDisplay;
+var pointsDisplay;
+var currentLetterDisplay;
+function vowelButtonClick() {
+	if(isVowel(currentLetter)){
+		points += currentPoints;
+		pointsDisplay.innerHTML = points;
+		nextLetter();
+	}
+	else{
+		loseHandler();
+	}
+}
+function nonVowelButtonClick() {
+	if(!isVowel(currentLetter)){
+		points += currentPoints;
+		pointsDisplay.innerHTML = points;
+		nextLetter();
+	}
+	else{
+		loseHandler();
+	}
+}
+function nextLetter(){
+	currentLetter = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+	currentLetterDisplay.innerHTML = currentLetter;
+	currentPoints = 500;
+}
+function isVowel(mychar){
+	mychar = mychar.toLowerCase();
+	return mychar === "a" ||mychar === "e"||mychar === "i"|| mychar === "o" || mychar === "u";
+}
+function pointsTimer(){
+	if(currentPoints > 0){
+		currentPoints--;
+	}
+	currentPointsDisplay.innerHTML = currentPoints;
+	if(gameInProgress){
+		setTimeout(pointsTimer, 100);
+	}
+}
+function loseHandler(){
+	gameInProgress = false;
+	alert("You fail! Score: &e" + points + "\nRefresh to replay.");
+}
+function init(){
+	currentLetterDisplay = document.getElementById("current-letter");
+	currentPointsDisplay = document.getElementById("current-points");
+	pointsDisplay = document.getElementById("points");
+	nextLetter();
+	pointsTimer();
+}
+window.onload = init;
+</script>
+</head>
+
+<body>
+<div id="main-game-pane">
+<div>Sc_re: <span id="points"></span></div>
+<div>P_ss_bl_ sc_r_ fr_m th_s l_tt_r: <span id="current-points"></span></div>
+<div id="current-letter" style="font-size:200%"></div>
+<div><button onclick="vowelButtonClick()">Vowel</button><button onclick="nonVowelButtonClick()">Not Vowel</button></div>
+</body>
+</html>
