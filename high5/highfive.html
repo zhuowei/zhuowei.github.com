@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>High Five time calculator</title>
+<script type="text/javascript" src="libs/pseudorandom.js"></script>
+<script type="text/javascript">
+var timeDiv;
+var nextTime;
+
+function calculateTimes(){
+	var curTime = new Date();
+	curTime.setMilliseconds(0);
+	curTime.setSeconds(0);
+	curTime.setMinutes(0);
+	curTime.setHours(0);
+	var curRand = new goog.testing.PseudoRandom(curTime.getTime());
+	var todayHour = curRand.random() * 24;
+	var todayMinute = curRand.random() * 60;
+	var todaySecond = curRand.random() * 60;
+	var todayTime = new Date(curTime.getTime());
+	todayTime.setSeconds(todaySecond);
+	todayTime.setMinutes(todayMinute);
+	todayTime.setHours(todayHour);
+	if(todayTime.getTime() < new Date().getTime()) {
+		nextTime = calculateTomorrowTime();
+	}
+	else{
+		nextTime = todayTime;
+	}
+}
+
+function calculateTomorrowTime(){
+	var curTime = new Date();
+	curTime.setMilliseconds(0);
+	curTime.setSeconds(0);
+	curTime.setMinutes(0);
+	curTime.setHours(0);
+	curTime.setDate(curTime.getDate() + 1);
+	var curRand = new goog.testing.PseudoRandom(curTime.getTime());
+	var todayHour = curRand.random() * 24;
+	var todayMinute = curRand.random() * 60;
+	var todaySecond = curRand.random() * 60;
+	var todayTime = new Date(curTime.getTime());
+	todayTime.setSeconds(todaySecond);
+	todayTime.setMinutes(todayMinute);
+	todayTime.setHours(todayHour);
+	return todayTime;
+}
+
+function init(e){
+	timeDiv = document.getElementById("highfive-time");
+	calculateTimes();
+	timeDiv.innerHTML = nextTime.toString();
+}
+window.addEventListener("load", init, false);
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7810231-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<h1>Give a high five to the nearest person at:</h1>
+<div style="font-family:sans-serif" id="highfive-time">Calculating</div>
+<noscript>Please turn on JavaScript.</noscript>
+</body>
+</html>
