@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The imaginary bacon dispenser</title>
+</head>
+<body>
+<div><button id="bacon-button" onclick="dispenseBacon()"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/NCI_bacon.jpg/48px-NCI_bacon.jpg" alt="bacon!">Get bacon!</button></div>
+<div id="bacon-count"></div>
+<script type="text/javascript">
+var currentBaconCount = 0;
+function loadHandler() {
+	var loadBaconCount = localStorage.getItem("baconCount");
+	if (loadBaconCount) {
+		currentBaconCount = loadBaconCount;
+	}
+	document.getElementById("bacon-count").innerHTML = currentBaconCount + " pieces of bacon served!";
+}
+
+function dispenseBacon() {
+	currentBaconCount++;
+	localStorage.setItem("baconCount", currentBaconCount);
+	document.getElementById("bacon-count").innerHTML = currentBaconCount + " pieces of bacon served!";
+}
+window.onload = loadHandler;
+</script>
+</body>
+</html>
