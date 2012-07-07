@@ -11,7 +11,10 @@ var currentBaconCount = 0;
 function loadHandler() {
 	var loadBaconCount = localStorage.getItem("baconCount");
 	if (loadBaconCount) {
-		currentBaconCount = loadBaconCount;
+		currentBaconCount = parseInt(loadBaconCount);
+		if (isNaN(currentBaconCount)) {
+			currentBaconCount = 0;
+		}
 	}
 	document.getElementById("bacon-count").innerHTML = currentBaconCount + " pieces of bacon served!";
 }
