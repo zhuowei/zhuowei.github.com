@@ -12,17 +12,22 @@ function loadHandler() {
 	var loadBaconCount = localStorage.getItem("baconCount");
 	if (loadBaconCount) {
 		currentBaconCount = parseInt(loadBaconCount);
-		if (isNaN(currentBaconCount)) {
+		if (!isFinite(currentBaconCount)) {
 			currentBaconCount = 0;
 		}
 	}
-	document.getElementById("bacon-count").innerHTML = currentBaconCount + " pieces of bacon served!";
+	displayCurrentCount();
 }
 
 function dispenseBacon() {
 	currentBaconCount++;
 	localStorage.setItem("baconCount", currentBaconCount);
-	document.getElementById("bacon-count").innerHTML = currentBaconCount + " pieces of bacon served!";
+	displayCurrentCount();
+}
+
+function displayCurrentCount() {
+	var countText = isFinite(currentBaconCount) ? currentBaconCount.toString() : "OVER 9000";
+	document.getElementById("bacon-count").innerHTML = countText + " pieces of bacon served!";
 }
 window.onload = loadHandler;
 </script>
