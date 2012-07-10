@@ -12,6 +12,9 @@ function processQuestion(question) {
 			return answer;
 		}
 	}
+	if (question.toLowerCase().indexOf("help") >= 0) {
+		return listAllCommands();
+	}
 	return answer;
 }
 
@@ -20,7 +23,7 @@ function inputHandler(e) {
 	var question = inputText.value;
 	var answer = processQuestion(question);
 	inputText.value = "";
-	logTextArea.value += "\nYou: " + question + "\nSteve: " + answer;
+	logTextArea.value += "You: " + question + "\nSteve: " + answer + "\n";
 	logTextArea.scrollTop = logTextArea.scrollHeight - logTextArea.clientHeight;
 }
 
@@ -36,6 +39,20 @@ function loadHandler() {
 	inputText.onkeydown = keyDownHandler;
 	sayButton = document.getElementById("say-button");
 	sayButton.onclick = inputHandler;
+}
+
+function listAllCommands() {
+	var retval = "Here is a list of all the commands that I understand:\n"
+	for (var i = 0; i < questions.length; i++) {
+		var question = questions[i];
+		if (question.hidden === true) continue;
+		if (question.answer instanceof Function) {
+			retval += " - " + question.question + "...\n";
+		} else {
+			retval += " - " + question.question + "\n";
+		}
+	}
+	return retval;
 }
 
 window.onload = loadHandler;

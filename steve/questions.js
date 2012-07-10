@@ -14,8 +14,8 @@ var questions = [
 { question: "Do you like cake?", answer: "Yes, but only square cake."},
 { question: "Install viruses", answer: function(question) { alert("Well, you asked for it!"); window.location = "http://sp.ask.com/toolbar/install/web/ask/download.php"; return "";}},
 { question: "The cake is a lie", answer: "It's also chocolate flavoured."},
-{ question: "Can you", hidden: true, answer: function(question) { return question.toLowerCase().replace(/can you/, "Yes, I can").replace("?", ".")}},
-{ question: "Do you like", hidden: true, answer: function(question) { return question.toLowerCase().replace(/do you like/, "Yes, I like").replace("?", ".")}},
-{ question: "Do you think", hidden: true, answer: function(question) { return question.toLowerCase().replace(/do you think/, question.length % 2 == 0? "Yes, I think" : "No, I don't think").replace("?", ".")}},
-{ question: "Are you", hidden: true, answer: function(question) { return question.toLowerCase().replace(/are you/, question.length % 2 == 0? "Yes, I am" : "No, I am not").replace("?", ".")}}
+{ question: "Can you", answer: function(question) { return question.toLowerCase().replace(/can you/, "Yes, I can").replace("?", ".")}},
+{ question: "Do you like", answer: function(question) { return question.toLowerCase().replace(/do you like/, "Yes, I like").replace("?", ".")}},
+{ question: "Do you think", answer: function(question) { return question.toLowerCase().replace(/do you think/, question.length % 2 == 0? "Yes, I think" : "No, I don't think").replace("?", ".")}},
+{ question: "Are you", answer: function(question) { return question.toLowerCase().replace(/are you/, question.length % 2 == 0? "Yes, I am" : "No, I am not").replace("?", ".")}}
 ]
