@@ -13,8 +13,10 @@ function processQuestion(question) {
 		}
 	}
 	if (question.toLowerCase().indexOf("help") >= 0) {
-		return listAllCommands();
-	}
+		return listAllCommands(false);
+	} else if (question.toLowerCase().indexOf("secret command") >= 0) {
+		return listAllCommands(true);
+	} 
 	return answer;
 }
 
@@ -23,7 +25,7 @@ function inputHandler(e) {
 	var question = inputText.value;
 	var answer = processQuestion(question);
 	inputText.value = "";
-	logTextArea.value += "You: " + question + "\nSteve: " + answer + "\n";
+	logTextArea.value += userName +": " + question + "\nSteve: " + answer + "\n";
 	logTextArea.scrollTop = logTextArea.scrollHeight - logTextArea.clientHeight;
 }
 
@@ -39,13 +41,14 @@ function loadHandler() {
 	inputText.onkeydown = keyDownHandler;
 	sayButton = document.getElementById("say-button");
 	sayButton.onclick = inputHandler;
+	inputText.style.width = (logTextArea.clientWidth - sayButton.clientWidth) + "px";
 }
 
-function listAllCommands() {
+function listAllCommands(showSecret) {
 	var retval = "Here is a list of all the commands that I understand:\n"
 	for (var i = 0; i < questions.length; i++) {
 		var question = questions[i];
-		if (question.hidden === true) continue;
+		if (!showSecret && question.hidden === true) continue;
 		if (question.answer instanceof Function) {
 			retval += " - " + question.question + "...\n";
 		} else {
@@ -53,6 +56,10 @@ function listAllCommands() {
 		}
 	}
 	return retval;
+}
+
+function clearScreen() {
+	logTextArea.value = "";
 }
 
 window.onload = loadHandler;
