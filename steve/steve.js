@@ -6,6 +6,8 @@ function processQuestion(question) {
 			var questionObj = questions[i];
 			if (questionObj.answer instanceof Function) {
 				answer = questionObj.answer(question);
+			} else if (questionObj.answer instanceof Array) {
+				answer = questionObj.answer[Math.floor(Math.random() * questionObj.answer.length)];
 			} else {
 				answer = questionObj.answer;
 			}

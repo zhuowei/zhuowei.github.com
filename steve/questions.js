@@ -3,9 +3,9 @@ var userName = "You";
 var clearScreen;
 var likeMicrosoft = false;
 var questions = [
-{ question: "Hello", answer: "Hello!" },
+{ question: "Hello", answer: ["Hello!", "What's up?", "Hey!"] },
 { question: "My name is", answer: function(question) { userName = question.substr(question.toLowerCase().indexOf("my name is ") + "My name is ".length).replace("?", "").replace(".", ""); return "Nice to meet you, " + userName + ".";}},
-{ question: "How are you?", answer: "Fine, thanks."},
+{ question: "How are you?", answer: ["Fine, thanks.", "Pretty good, thanks."]},
 { question: "Who are you?", answer: "I am Steve, a Minecraft player."},
 { question: "That's a very nice", hidden: true, answer: function(question) { alert("Connection closed: remote computer exploded"); return "";}},
 { question: "Sssss", hidden: true, answer: function(question) { alert("Connection closed: remote computer exploded"); running = false; return "";}},
