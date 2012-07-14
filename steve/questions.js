@@ -27,7 +27,7 @@ return "Let me " + (likeMicrosoft? "Bing" : "Google") + " that for you.";}},
 { question: "Do you think", answer: function(question) { return question.toLowerCase().replace(/do you think/, question.length % 2 == 0? "Yes, I think" : "No, I don't think").replace("?", ".")}},
 { question: "Are you", answer: function(question) { return question.toLowerCase().replace(/are you/, question.length % 2 == 0? "Yes, I am" : "No, I am not").replace("?", ".")}},
 { question: "Clear screen", answer: function(question) { clearScreen(); return "Blew up old responses with a stack of TNT.";}},
-{ question: "Hi", answer: "Hey!" },
+{ question: "Hi", matchExact: true, answer: "Hey!" },
 { question: "Ban me", answer: function(question) { alert("Disconnected: Banned"); running = false; return "You asked for it!"} },
 { question: "Minecraft crashed", answer: "It's not my fault! Update your display card's drivers and force update Minecraft. "}
 ]

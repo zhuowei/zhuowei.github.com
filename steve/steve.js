@@ -1,9 +1,11 @@
 var logTextArea, inputText;
 function processQuestion(question) {
-	var answer = "I don't know what you mean, sorry.";
+	var answer;
 	for (var i = 0; i < questions.length; i++) {
 		if (question.toLowerCase().indexOf(questions[i].question.toLowerCase()) >= 0) {
 			var questionObj = questions[i];
+			if (questionObj.matchExact === true && question.toLowerCase() !== questionObj.question.toLowerCase())
+				continue;
 			if (questionObj.answer instanceof Function) {
 				answer = questionObj.answer(question);
 			} else if (questionObj.answer instanceof Array) {
@@ -18,8 +20,11 @@ function processQuestion(question) {
 		return listAllCommands(false);
 	} else if (question.toLowerCase().indexOf("secret command") >= 0) {
 		return listAllCommands(true);
-	} 
-	return answer;
+	}
+	if (question[question.length - 1] === "?") {
+		return Math.random() < 0.5? "I don't know the answer to that." : "That's a mystery to me.";
+	}
+	return Math.random() < 0.5? "Uh-huh." : "Mh-hum.";
 }
 
 function inputHandler(e) {
