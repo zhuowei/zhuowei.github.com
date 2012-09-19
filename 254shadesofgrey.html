@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>254 shades of grey</title>
+</head>
+<body>
+<div id="shades"></div>
+<script type="text/javascript">
+"use strict";
+var shadesElem = document.getElementById("shades");
+for (var i = 1; i < 255; i++) {
+    var newElem = document.createElement("div");
+    newElem.style.backgroundColor = "rgb(" + i.toString() + ", " + i.toString() + ", " + i.toString() + ")";
+    newElem.textContent = i.toString();
+    shadesElem.appendChild(newElem);
+}
+</script>
+</body>
