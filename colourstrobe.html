@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ColourStrobe</title>
+<script type="text/javascript">
+function audioBeat() {
+	document.body.style.backgroundColor = generateNewBg();
+	try {
+		drumBeat.currentTime = 0;
+		drumBeat.play();
+	} catch (e) {}
+}
+function loadHandler() {
+	drumBeat = document.getElementById("drumbeat_elem");
+	setInterval(audioBeat, 500);
+	audioBeat();
+}
+function generateNewBg() {
+	return "rgb(" + generateNewColorVal() + "," + generateNewColorVal() + "," + generateNewColorVal() + ")"
+}
+function generateNewColorVal() {
+	return (Math.floor(Math.random() * 128) + 128).toString();
+}
+window.onload = loadHandler;
+</script>
+</head>
+<body>
+<audio id="drumbeat_elem" src="http://s3.amazonaws.com/MinecraftResources/newsound/note/snare.ogg">Y U NO audio element? Get Firefox!</audio>
+</body>
+</html>
