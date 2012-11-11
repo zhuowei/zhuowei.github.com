@@ -62,6 +62,7 @@ var secondsCountedDown = 0;
 var ticksCounted = 0;
 var countdownContainer, updateVersionDiv;
 var beginTime;
+var catMode = false;
 function advanceTimerAndBuildString() {
     ticksCounted++;
     //console.log(Math.floor(ticksCounted / 10) % 4);
@@ -121,6 +122,12 @@ function timerHandler() {
     countdownContainer.innerHTML = advanceTimerAndBuildString();
     if (Math.random() > 0.5) {
         updateVersionDiv.innerHTML = "0." + Math.floor(Math.random() * 10) + "." + Math.floor(Math.random() * 10);
+    }
+
+    if (!catMode && ticksCounted >= 210) {
+        document.body.style.backgroundImage = "url(http://www.prguitarman.com/comics/poptart1red1.gif)";
+        catMode = true;
+        document.title = "I LOVE CATS";
     }
 }
 
