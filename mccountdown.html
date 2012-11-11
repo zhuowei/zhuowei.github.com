@@ -50,7 +50,13 @@ var scriptedResponses = {
     137: "pig, pig",
     140: "Never gonna give you up",
     141: "Never gonna let you down",
-    180: "There are no more funny responses."
+    160: "There are no more funny responses.",
+    165: "I lied.",
+    170: "<img src=\"http://www.webpulp.org/wp-content/uploads/2007/04/5414660_8716bf615a-300x262.jpg\" style=\"display: none\" alt=\"nothing\">There was a picture here, but I've deleted it.",
+    175: "Never mind, here it is. <img src=\"http://www.webpulp.org/wp-content/uploads/2007/04/5414660_8716bf615a-300x262.jpg\" alt=\"bunny\">",
+    180: "You watched this for 180 seconds?! With a Rickroll in between?",
+    201: "Man, you just lost the Game.",
+    205: "OK, there really are no more funny messages."
 }
 var secondsCountedDown = 0;
 var ticksCounted = 0;
@@ -58,7 +64,7 @@ var countdownContainer, updateVersionDiv;
 var beginTime;
 function advanceTimerAndBuildString() {
     ticksCounted++;
-    console.log(Math.floor(ticksCounted / 10) % 4);
+    //console.log(Math.floor(ticksCounted / 10) % 4);
     switch (Math.floor(ticksCounted / 10) % 4) {
         case 0:
         case 1:
