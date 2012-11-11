@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Minecraft PE Release Countdown</title>
+<style>
+body {
+    background-image: url(http://b.wiki.vg/static/dirt.png);
+    font-family: Helvetica,Arial,sans-serif;
+}
+
+#main-container {
+    background-color: #eeeeee;
+    display: block;
+    text-align: center;
+}
+
+#update-version {
+    font-weight: bold;
+}
+
+#countdown-container{
+    font-size: 50px;
+}
+#myfooter {
+    color: white;
+    font-size: 10px;
+    text-align: center;
+}
+</style>
+
+</head>
+<body>
+<div id="main-container">
+The M‌inecraft PE update <span id="update-version">0.5.0</span> will be released in:
+<div id="countdown-container">
+a while.
+</div>
+</div>
+<script type="text/javascript">
+"use strict";
+var scriptedResponses = {
+    120: "I came to",
+    121: "dig, dig,",
+    122: "dig, dig,",
+    130: "Gotta build a city",
+    131: "so big, big,",
+    132: "big, big",
+    135: "Hold on, let me just kill this",
+    136: "pig, pig",
+    137: "pig, pig",
+    140: "Never gonna give you up",
+    141: "Never gonna let you down",
+    180: "There are no more funny responses."
+}
+var secondsCountedDown = 0;
+var ticksCounted = 0;
+var countdownContainer, updateVersionDiv;
+var beginTime;
+function advanceTimerAndBuildString() {
+    ticksCounted++;
+    console.log(Math.floor(ticksCounted / 10) % 4);
+    switch (Math.floor(ticksCounted / 10) % 4) {
+        case 0:
+        case 1:
+            secondsCountedDown++;
+            break;
+        case 2:
+            secondsCountedDown -= 10;
+            break;
+        case 3:
+            secondsCountedDown += 20;
+            break;
+    }
+
+    if (scriptedResponses[ticksCounted] != null) {
+        return scriptedResponses[ticksCounted];
+    }
+
+    var secondsLeft = beginTime - secondsCountedDown;
+    if (secondsLeft <= 0) {
+        return "<img src=\"http://upload.wikimedia.org/wikipedia/en/thumb/7/78/Trollface.svg/365px-Trollface.svg.png\" alt=\"trolled\">"
+    }
+    var dateDiff = timeStructFromSeconds(secondsLeft);
+    return dateDiff.years + " Years, " + dateDiff.weeks + " weeks, " + dateDiff.days + " days,  " + dateDiff.hours + " hours, " +
+		dateDiff.minutes + " minutes, and " + dateDiff.seconds + " seconds ";
+}
+    
+   
+function timeStructFromSeconds(sec){
+	var retval={};
+	retval["years"]=Math.floor(sec/60/60/24/365);
+	sec-=retval["years"]*60*60*24*365;
+	retval["weeks"]=Math.floor(sec/60/60/24/7);
+	sec-=retval["weeks"]*60*60*24*7;
+	retval["days"]=Math.floor(sec/60/60/24);
+	sec-=retval["days"]*60*60*24;
+	retval["hours"]=Math.floor(sec/60/60);
+	sec-=retval.hours*60*60;
+	retval["minutes"]=Math.floor(sec/60);
+	sec-=retval.minutes*60;
+	retval["seconds"]=Math.floor(sec);
+	return retval;
+}
+
+function loadHandler() {
+    countdownContainer = document.getElementById("countdown-container");
+    updateVersionDiv = document.getElementById("update-version");
+    setInterval(timerHandler, 1000);
+    beginTime = (1352619024 + parseInt("yolo", 36)) - (Date.now() / 1000);
+    timerHandler();
+
+}
+
+function timerHandler() {
+    countdownContainer.innerHTML = advanceTimerAndBuildString();
+    if (Math.random() > 0.5) {
+        updateVersionDiv.innerHTML = "0." + Math.floor(Math.random() * 10) + "." + Math.floor(Math.random() * 10);
+    }
+}
+
+window.onload = loadHandler;
+</script>
+
+
+<br>
+<br>
+<br>
+<footer id="myfooter">This is just a joke &mdash; don't take it seriously.</footer>
+</body>
+</html>
+    
