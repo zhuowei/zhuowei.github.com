@@ -7,6 +7,9 @@
 <script type="text/javascript">
 var wordz = window.location.search.substring(1).split("=");
 var wordtodo = decodeURIComponent(wordz[0]);
+if (wordtodo === "I like trains") {
+    window.location = "https://www.youtube.com/watch?v=hHkKJfcBXcw";
+}
 var wordString = "";
 for (var a = 0; a < parseInt(wordz[1]); a++) {
     wordString += wordtodo + " ";
