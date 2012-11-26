@@ -6,9 +6,10 @@
 <body>
 <script type="text/javascript">
 var wordz = window.location.search.substring(1).split("=");
+var wordtodo = decodeURIComponent(wordz[0]);
 var wordString = "";
 for (var a = 0; a < parseInt(wordz[1]); a++) {
-    wordString += wordz[0] + " ";
+    wordString += wordtodo + " ";
 }
 document.write(wordString);
 </script>
