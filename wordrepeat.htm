@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Repeat a word</title>
+</head>
+<body>
+<script type="text/javascript">
+var wordz = window.location.search.substring(1).split("=");
+var wordString = "";
+for (var a = 0; a < parseInt(wordz[1]); a++) {
+    wordString += wordz[0] + " ";
+}
+document.write(wordString);
+</script>
+</body>
+</html>
