@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Return from whence you came!</title>
+<script type="text/javascript">
+if (document.referrer != "") {
+	window.location = document.referrer;
+} else {
+	alert("To use this page, link it from another page, and, when the user clicks on the link, the user will be bounced back to the other page");
+}
+</script>
+</head>
+<body>
+<h1>Return from whence you came!</h1>
+<noscript>Enable JavaScript: you're spoiling the fun.</noscript>
+</body>
+</html>
