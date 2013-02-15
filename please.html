@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chrome does the Harlem Shake</title>
+</head>
+<body>
+Disable your popup blocker.
+<div id="strobe-small">Loading...</div>
+<span id="loadbar0">_</span><span id="loadbar1">_</span><span id="loadbar2">_</span><span id="loadbar3">_</span><span id="loadbar4">_</span><span id="loadbar5">_</span>
+<br>Original video: (for music)
+<iframe width="560" height="315" src="http://www.youtube.com/embed/8vJiSSAMNWw?autoplay=1" frameborder="0" allowfullscreen onload="loadHandler()"></iframe>
+<script type="text/javascript">
+var ticks = 0;
+var strobeStatus = false;
+var strobeElem;
+var popUps = new Array(20);
+var hasDropped = false;
+var lastTime = 0;
+var loadImage;
+function tick() {
+	ticks++;
+	//document.title = ticks;
+	if (ticks == 13 * 20) {
+		for (var i = 0; i < 20; i++) {
+			popUps[i] = window.open("about:blank", "Window" + i, 
+				"resizable=no,scrollbars=no,status=no,width=" + (100 + i * 20) + ",height=" +
+					(100 + i * 20));
+			hasDropped = true;
+
+		}
+	} else if (ticks == (13 * 20) + 10) {
+		for (var i = 0; i < 20; i++) {
+			popUps[i].document.bgColor = "#" + Math.floor(Math.random() * 0x1000000).toString(16);
+		}
+	}
+
+	if (ticks % 10 == 0) {
+		var numLights = (ticks / 10) % 6;
+		for (var i = 0; i < 6; i++) {
+			document.getElementById("loadbar" + i).style.backgroundColor = numLights < i? "white": "green";
+		}
+		if (hasDropped) {
+			for (var i = 0; i < 20; i++) {
+				popUps[i].moveTo((Math.random() * window.screen.width), (Math.random() * window.screen.height));
+			}
+		}
+	} else {
+		if (hasDropped && ticks >= 14 * 20) {
+			for (var i = 0; i < 20; i++) {
+				popUps[i].moveBy((Math.random() * 8) - 4, (Math.random() * 8) - 4);
+			}
+		}
+	}
+} 
+
+function loadHandler() {
+strobeElem = document.getElementById("strobe-small");
+setInterval(tick, 50);
+}
+//window.onload = loadHandler;
+
+window.open().close();
+
+function cleanUp() {
+	for (var i = 0; i < 20; i++) {
+		popUps[i].close();
+	}
+}
+
+window.onbeforeunload = cleanUp;
+
+function buttonClick() {
+	var thisTime = Date.now();
+	document.title = thisTime - lastTime;
+	lastTime = thisTime;
+}
+
+</script>
+
+</body>
+</html>
