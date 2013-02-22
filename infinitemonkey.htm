@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>TestMonkey -- Loading...</title>
+<script type="text/javascript">
+//Zhuowei's TestMonkey script
+//October 09 2009
+//updated 12/12/2010
+//You can do whatever you want with this document as long as you keep this notice and my name intact
+var randomnum=0
+var temptitle=""
+//var typewriter=""
+var hasDoneOnce=false;
+function monkeyType(times){
+	var text;
+	for (y=1;y<=times;y++){
+		randomnum=Math.round(Math.random()*27)
+		if (randomnum>25){
+			text=text+" "
+		}
+		else{
+			text=text+String.fromCharCode(97+randomnum)
+		}
+	}
+	return text;
+}
+
+function monkeyTitle(){
+	for (z=1;z<=10;z++){
+		randomnum=Math.round(Math.random()*27)
+		if (randomnum>25){
+			temptitle=temptitle + " "
+		}
+		else{
+			temptitle=temptitle + String.fromCharCode(97+randomnum)
+		}
+	}
+//	document.title="TestMonkey -- " + temptitle
+}
+function makeTitle(){
+	monkeyTitle()
+	document.title="TestMonkey -- " + temptitle
+	monkeyTitle()
+	document.getElementById("head1").innerHTML=temptitle;
+}
+function init(){
+	window.scrollY=0;
+	makeTitle();
+	document.getElementById("monkey").innerHTML=monkeyType(10000);
+}
+function scroll(){
+	//alert(window.pageYOffset +" " + window.scrollMaxY);
+	if(!hasDoneOnce){
+		hasDoneOnce=true;
+		return;
+	}
+	if(window.pageYOffset>=window.scrollMaxY-50){
+			document.getElementById("monkey").innerHTML=document.getElementById("monkey").innerHTML+monkeyType(5000);
+	}
+}
+window.onscroll=scroll;
+
+</script>
+
+</head>
+
+<body onload="init();">
+<h1 id="head1">MonkeyTalk</h1>
+<p id="monkey"></p>
+   
+</body>
+
+</html>
