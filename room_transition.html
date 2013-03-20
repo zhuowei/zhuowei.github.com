@@ -2,28 +2,29 @@
 <html>
 <head>
 <script type="text/javascript">
+"use strict";
 var playerDiv;
 var player = {x: 5, y: 5, xVel: 0, yVel: 0, width: 48, height: 48}
-var roomView = {x: 0, y: 0, width: 320, height: 320}
-var nextRoomView = {x: 0, y: 0, width: 320, height: 320}
+var roomView = {x: 0, y: 0, width: 320, height: 240}
+var nextRoomView = {x: 0, y: 0, width: 320, height: 240}
 var dispDiv;
 var transitingRoom = false;
 
 function mainLoop() {
-	player.x += player.xVel;
-	player.y += player.yVel;
-	playerDiv.style.left = player.x + "px";
-	playerDiv.style.top = player.y + "px";
 	if (transitingRoom) {
 		runRoomTransit();
 		return;
 	}
-	if (player.x + player.width > roomView.x + roomView.width - 5) {
+	player.x += player.xVel;
+	player.y += player.yVel;
+	playerDiv.style.left = player.x + "px";
+	playerDiv.style.top = player.y + "px";
+	if (player.x + (0.5 * player.width) > roomView.x + roomView.width) {
 		nextRoomView.x = roomView.x + roomView.width;
 		transitingRoom = true;
 	}
-	if (player.y + player.height > roomView.y + roomView.height - 5) {
-		nextRoomView.y = roomView.x + roomView.height;
+	if (player.y + (0.5 * player.height) > roomView.y + roomView.height) {
+		nextRoomView.y = roomView.y + roomView.height;
 		transitingRoom = true; 
 	}
 
@@ -32,8 +33,8 @@ function mainLoop() {
 		//window.location = "http://www.youtube.com/watch?v=oHg5SJYRHA0";
 
 function runRoomTransit() {
-	console.log(roomView)
-	console.log(nextRoomView)
+	//console.log(roomView)
+	//console.log(nextRoomView)
 	var testTrans = true;
 	if (Math.abs(roomView.x - nextRoomView.x) > 5) {
 		roomView.x += 2 * (roomView.x > nextRoomView.x? -1:1)
@@ -51,6 +52,9 @@ function runRoomTransit() {
 		transitingRoom = false;
 		if (roomView.x == 320) {
 			loadRick();
+		}
+		if (roomView.y >= 240) {
+			window.location = "http://www.youtube.com/watch?v=sP4NMoJcFd4";
 		}
 	}
 	dispDiv.scrollLeft = roomView.x;
@@ -106,7 +110,7 @@ window.onload = loadHandler;
 </script>
 <body>
 <div id="dispdiv" style="width: 320px; height: 240px; background-color: #000000; overflow: hidden; position: absolute; left: 0px; top: 0px">
-<div id="containerdiv" style="width: 1024px; height: 240px">
+<div id="containerdiv" style="width: 640px; height: 480px">
 
 <div id="flowerz" style="position: absolute; left: 13px; top: 37px">
 <img src="http://media-mcw.cursecdn.com/b/bc/Cyan_Flower.png" width="48" height="48" alt="flowerz">
@@ -114,6 +118,10 @@ window.onload = loadHandler;
 
 <div id="rick" style="position: absolute; left: 325px; top: 5px">
 <img id="rickpic" src="http://upload.wikimedia.org/wikipedia/en/f/f7/RickRoll.png" width="300" height="220" alt="rick">
+</div>
+
+<div id="ilovecat" style="position: absolute; left: 5px; top: 245px">
+<img id="ilovecatpic" src="http://i4.ytimg.com/vi/sP4NMoJcFd4/hqdefault.jpg" width="300" height="220" alt="cat">
 </div>
 
 <div id="gamechar" style="position: absolute; left: 5px; top: 5px; z-index:19132">
