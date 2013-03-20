@@ -4,31 +4,76 @@
 <script type="text/javascript">
 var playerDiv;
 var player = {x: 5, y: 5, xVel: 0, yVel: 0, width: 48, height: 48}
+var roomView = {x: 0, y: 0, width: 320, height: 320}
+var nextRoomView = {x: 0, y: 0, width: 320, height: 320}
+var dispDiv;
+var transitingRoom = false;
 
 function mainLoop() {
 	player.x += player.xVel;
 	player.y += player.yVel;
-	if (player.x + player.width > 315 || player.y + player.height > 235 || player.x < 5 || player.y < 5) {
-		window.location = "http://www.youtube.com/watch?v=oHg5SJYRHA0";
-	}
 	playerDiv.style.left = player.x + "px";
 	playerDiv.style.top = player.y + "px";
+	if (transitingRoom) {
+		runRoomTransit();
+		return;
+	}
+	if (player.x + player.width > roomView.x + roomView.width - 5) {
+		nextRoomView.x = roomView.x + roomView.width;
+		transitingRoom = true;
+	}
+	if (player.y + player.height > roomView.y + roomView.height - 5) {
+		nextRoomView.y = roomView.x + roomView.height;
+		transitingRoom = true; 
+	}
 
+}
+
+		//window.location = "http://www.youtube.com/watch?v=oHg5SJYRHA0";
+
+function runRoomTransit() {
+	console.log(roomView)
+	console.log(nextRoomView)
+	var testTrans = true;
+	if (Math.abs(roomView.x - nextRoomView.x) > 5) {
+		roomView.x += 2 * (roomView.x > nextRoomView.x? -1:1)
+		testTrans = false;
+	} else {
+		roomView.x = nextRoomView.x;
+	}
+	if (Math.abs(roomView.y - nextRoomView.y) > 2) {
+		roomView.y += 2 * (roomView.y > nextRoomView.y? -1: 1)
+		testTrans = false;
+	} else {
+		roomView.y = nextRoomView.y;
+	}
+	if (testTrans) {
+		transitingRoom = false;
+		if (roomView.x == 320) {
+			loadRick();
+		}
+	}
+	dispDiv.scrollLeft = roomView.x;
+	dispDiv.scrollTop = roomView.y;
+}
+
+function loadRick() {
+	window.location = "http://www.youtube.com/watch?v=oHg5SJYRHA0";
 }
 
 function keyDownHandler(e) {
 	switch (e.keyCode) {
 		case 37:
-			player.xVel = -2;
+			player.xVel = -4;
 			break;
 		case 39:
-			player.xVel = 2;
+			player.xVel = 4;
 			break;
 		case 38:
-			player.yVel = -2;
+			player.yVel = -4;
 			break;
 		case 40:
-			player.yVel = 2;
+			player.yVel = 4;
 			break;
 	}
 }
@@ -51,19 +96,30 @@ function keyUpHandler(e) {
 
 function loadHandler() {
 	playerDiv = document.getElementById("gamechar");
+	dispDiv = document.getElementById("dispdiv");
 	setInterval(mainLoop, 50);
+	dispDiv.scrollLeft = dispDiv.scrollTop = 0;
 }
 window.onkeydown = keyDownHandler;
 window.onkeyup = keyUpHandler;
 window.onload = loadHandler;
 </script>
 <body>
-<div style="width: 320px; height: 240px; background-color: #000000; overflow: hidden; position: absolute; left: 0px; top: 0px">
+<div id="dispdiv" style="width: 320px; height: 240px; background-color: #000000; overflow: hidden; position: absolute; left: 0px; top: 0px">
+<div id="containerdiv" style="width: 1024px; height: 240px">
+
 <div id="flowerz" style="position: absolute; left: 13px; top: 37px">
 <img src="http://media-mcw.cursecdn.com/b/bc/Cyan_Flower.png" width="48" height="48" alt="flowerz">
 </div>
-<div id="gamechar" style="position: absolute; left: 5px; top: 5px">
+
+<div id="rick" style="position: absolute; left: 325px; top: 5px">
+<img id="rickpic" src="http://upload.wikimedia.org/wikipedia/en/f/f7/RickRoll.png" width="300" height="220" alt="rick">
+</div>
+
+<div id="gamechar" style="position: absolute; left: 5px; top: 5px; z-index:19132">
 <img src="https://twimg0-a.akamaihd.net/profile_images/1893144584/24358_113827028641167_100000416127943_186988_5384643_n.jpg" width="48" height="48" alt="char">
+</div>
+
 </div>
 </div>
 </body>
