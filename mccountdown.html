@@ -113,7 +113,7 @@ function loadHandler() {
     countdownContainer = document.getElementById("countdown-container");
     updateVersionDiv = document.getElementById("update-version");
     setInterval(timerHandler, 1000);
-    beginTime = (1352619024 + parseInt("yolo", 36)) - (Date.now() / 1000);
+    beginTime = Math.floor((60 * 60 * 24 * 30) * Math.random());/*(1352619024 + parseInt("yolo", 36)) - (Date.now() / 1000)*/;
     timerHandler();
 
 }
