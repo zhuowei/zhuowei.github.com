@@ -1,0 +1,21 @@
+html {
+	min-height: 100%;
+}
+body {
+	background-color: black;
+	background-image: linear-gradient(to bottom, black, #333333);
+	color: white;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+	color: #bbbbbb;
+}
+
+a:visited {
+	color: #999999;
+}
+
+a:hover {
+	color: #eeeeee;
+}
