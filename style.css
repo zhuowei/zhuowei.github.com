@@ -3,17 +3,16 @@ html {
 }
 body {
 	background-color: black;
-	background-image: linear-gradient(to bottom, black, #333333);
 	color: white;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
 }
 
 a {
-	color: #bbbbbb;
+	color: #cccccc;
 }
 
 a:visited {
-	color: #999999;
+	color: #aaaaaa;
 }
 
 a:hover {
