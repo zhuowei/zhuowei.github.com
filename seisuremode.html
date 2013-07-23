@@ -17,7 +17,8 @@ function seisureTick() {
 	lightOn = !lightOn;
 	requestAnimationFrame(seisureTick);
 }
-seisureTick();
+var agree = confirm("This is a page with rapidly flashing lights. Are you sure you want to open this page? Click \"OK\" to continue.");
+if (agree) seisureTick();
 </script>
 </body>
 </html>
