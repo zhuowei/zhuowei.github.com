@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SEISURE LIGHT</title>
+</head>
+<body>
+<script type="text/javascript">
+(function() {
+  var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+  window.requestAnimationFrame = requestAnimationFrame;
+})();
+var lightOn = false;
+var halfDivider = false;
+function seisureTick() {
+	document.body.style.backgroundColor = lightOn? "white" : "black";
+	lightOn = !lightOn;
+	requestAnimationFrame(seisureTick);
+}
+seisureTick();
+</script>
+</body>
+</html>
