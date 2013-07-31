@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Run and Jump</title>
+</head>
+<body>
+<canvas id="maincanvas" width="160" height="100" style="width:640px;height:400px;image-rendering: -moz-crisp-edges;"></canvas>
+<script>
+/*
+      /|
+     / |
+    /  |
+   /|  |
+  / |  |
+ / y|  |
+/___|__|
+  1   z
+
+http://www.extentofthejam.com/pseudo/
+
+ Y_screen = (Y_world / Z) + (y_resolution / 2)
+
+Now, since we're given Y_screen (each line), juggle the equation so that we're finding the Z:
+
+Z = Y_world / (Y_screen - (height_screen / 2)) 
+
+Y_world is camera height, and scaling factor is just 1/z.
+
+*/
+var canvas, ctx;
+var playerheight = -40;
+var playeryspeed = 0;
+const road_screen_height = 100;
+const road_screen_width = 160;
+var onground = true;
+var hasdoublejumped = false;
+function loadHandler() {
+	canvas = document.getElementById("maincanvas");
+	ctx = canvas.getContext("2d");
+	render();
+}
+
+var worldoffset = 0;
+
+var blocklist = new Array(0x100);
+var run = Math.floor(Math.random() * 5) + 3;
+for (var i = 0; i < blocklist.length; i++) {
+	if (run == 0) {
+		blocklist[i] = false;
+		run = Math.floor(Math.random() * 5) + 3;
+	} else {
+		blocklist[i] = true;
+		run--;
+	}
+}
+
+//var zlist = new Array(road_screen_height);
+//for (var i = 0; i < road_screen_height; i++) {
+//		
+//	zlist[i] = z;
+//}
+
+function render() {
+	ctx.clearRect(0, 0, 160, 100);
+	var width = 0;
+	//console.log(worldoffset);
+	for (var i = 50; i < road_screen_height; i++) {
+		var z = playerheight / ((road_screen_height/2) - i);
+		var block = Math.floor(worldoffset + z);
+		var blocksubtex = ((worldoffset + z) - block) > 0.5;
+		//console.log(1/z);
+		if (z < 0) continue;
+		//if (i < 55) console.log(block);
+		if (blocklist[block % 256]) {
+			width = Math.floor(road_screen_width * 1/z * 0.5);
+			ctx.fillStyle = blocksubtex? "black" : "grey";
+		} else {
+			ctx.fillStyle = "#964B00";
+		}
+		ctx.fillRect((road_screen_width * 0.5) - width, i, width * 2, 1);
+	}
+	worldoffset += 0.1;
+	var isontrail = blocklist[Math.floor(worldoffset)]; 
+	if (!onground) {
+		playerheight += playeryspeed;
+		playeryspeed += 0.3;
+		if (playerheight >= -40 && playerheight < -35 && isontrail) {
+			playerheight = -40;
+			onground = true;
+			hasdoublejumped = false;
+		}
+	} else {
+		if (!isontrail) onground = false;
+	}
+	if (playerheight > 10) {
+		losegame();
+		return;
+	}
+	window.mozRequestAnimationFrame(render);
+}
+
+function jump() {
+if (!onground && hasdoublejumped) return;
+playeryspeed = -4;playerheight -= 2;
+if (!onground) hasdoublejumped = true;
+onground = false;
+}
+
+function losegame() {
+	alert("You ran " + Math.floor(worldoffset) + " metres before falling off.");
+}
+
+window.onload = loadHandler;
+</script>
+<button id="derp" onmousedown="jump()">Jump</button>
+</body>
+</html>
