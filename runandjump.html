@@ -2,9 +2,18 @@
 <html>
 <head>
 <title>Run and Jump</title>
+<style>
+#maincanvas {
+                   image-rendering: -moz-crisp-edges;         /* Firefox */
+                   image-rendering:   -o-crisp-edges;         /* Opera */
+                   image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+                   image-rendering: crisp-edges;
+                   -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+}
+</style>
 </head>
 <body>
-<canvas id="maincanvas" width="160" height="100" style="width:640px;height:400px;image-rendering: -moz-crisp-edges;"></canvas>
+<canvas id="maincanvas" width="160" height="100" style="width:640px;height:400px;" onmousedown="jump()"></canvas>
 <script>
 /*
       /|
@@ -27,6 +36,13 @@ Z = Y_world / (Y_screen - (height_screen / 2))
 Y_world is camera height, and scaling factor is just 1/z.
 
 */
+
+(function() {
+  var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+                              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+  window.requestAnimationFrame = requestAnimationFrame;
+})();
+
 var canvas, ctx;
 var playerheight = -40;
 var playeryspeed = 0;
@@ -53,6 +69,7 @@ for (var i = 0; i < blocklist.length; i++) {
 		run--;
 	}
 }
+blocklist[255] = true;
 
 //var zlist = new Array(road_screen_height);
 //for (var i = 0; i < road_screen_height; i++) {
@@ -96,7 +113,7 @@ function render() {
 		losegame();
 		return;
 	}
-	window.mozRequestAnimationFrame(render);
+	window.requestAnimationFrame(render);
 }
 
 function jump() {
