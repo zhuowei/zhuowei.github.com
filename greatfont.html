@@ -8,6 +8,8 @@ function greatGodify(aaa) {
 		var c = chars[i].charCodeAt(0);
 		if (c < 0x100 && c > 0x20) {
 			chars[i] = String.fromCharCode(c + 65248);
+		} else if (c == 0x20) {
+			chars[i] = "\u3000"; //wide space
 		}
 	}
 	return chars.join("");
