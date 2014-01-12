@@ -12,9 +12,16 @@ function greatGodify(aaa) {
 	}
 	return chars.join("");
 }
-alert(greatGodify(prompt("Enter text")));
+
+function doThis() {
+	var area = document.getElementById("mainarea");
+	area.value = greatGodify(area.value);
+}
 </script>
 </head>
 <body>
+<textarea rows="25" cols="80" id="mainarea"></textarea>
+<br>
+<button onClick="doThis()">Go</button>
 </body>
 </html>
