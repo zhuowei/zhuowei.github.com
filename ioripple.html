@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Port of 0xabad1dea's ioripple.asm</title>
+</head>
+<body style="background-color: black; color: white">
+<canvas id="maincanvas" width="320" height="200" style="width: 640px; height: 400px"></canvas>
+<p>Port of <a href="http://0xabad1dea.github.io/">0xabad1dea's ioripple.asm demo</a></p>
+<script>
+"use strict";
+var width = 320;
+var height = 200;
+var canvas = document.getElementById("maincanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, 320, 200);
+var imageData = ctx.getImageData(0, 0, width, height);
+var imageDataData = imageData.data;
+var iodata = [
+0xff,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x0,0x0,0x0, 0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x55,0x0,0x0, 0x0,0x55,0x55,0x55,0x55,0x55,0x0,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x0,0x0,0x0,	0x55,0x0,0x0,0x0,0x0,0x0,0x55,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x55,0x0,0x0, 0x55,0x0,0x0,0x0,0x0,0x0,0x55,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x55,0x0,0x0,0x55,0x0,0x0,0x0,0x0,0x0,0x55,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x55,0x0,0x0,0x55,0x0,0x0,0x0,0x0,0x0,0x55,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x55,0x0,0x0,0x55,0x0,0x0,0x0,0x0,0x0,0x55,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x55,0x0,0x0,0x0,0x55,0x55,0x55,0x55,0x55,0x0,0x0,0x0,0x0,0xff,
+0xff,0x0,0x0,0x0,0x0,0x0,0x0,	0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xff
+];
+var ioimgWidth = 18;
+var ioimgHeight = 10;
+var fbData = new Uint8Array(width * height);
+var palette = new Uint32Array(0x100);
+/* generate the palette. I think. "noice steel blue generator". */
+for (var i = 0; i < 0x100; i++) {
+	var red = (((i >> 1) | 8) + 60) & 0xff;
+	var green = (red - 60) & 0xff;
+	var blue = green;
+	palette[i] = (red << 16) | (green << 8) | blue;
+}
+/* end palette. */
+/* stripes */
+for (var i = 0; i < width * height; i++) {
+	var color = (i ^ (i - 1)) & 0xff;
+	fbData[i] = color;
+}
+/* end stripes */
+var frameCounter = 0;
+function masterJump() {
+	if (frameCounter < 8) {
+		/* smooth: "slightly modified from bla's smoothing filter" */
+		for (var i = width; i < (width * height) - width; i++) {
+			var value = fbData[i];
+			var oneRowUp = fbData[i - width];
+			value += oneRowUp;
+			var oneRowDown = fbData[i + width];
+			value += oneRowDown;
+			var twoToTheLeft = fbData[i - 2];
+			value += twoToTheLeft;
+			var oneToTheRight = fbData[i + 1];
+			value += oneToTheRight;
+			value = (value << 3) / 40;
+			/* it's an average: 5 values * 8 = 40 * average value */
+			fbData[i] = value & 0xff;
+		}
+		/* "blitting the 'io'" */
+		var rowAddr = (80 * width + 150);
+		for (var ior = 0; ior < ioimgHeight; ior++) {
+			for (var ioc = 0; ioc < ioimgWidth; ioc++) {
+				fbData[rowAddr++] = iodata[ior * ioimgWidth + ioc];
+			}
+			rowAddr += (width - ioimgWidth);
+		}
+	} else {
+		/* Ripple implementation. As the original author claims:
+		 * "and here is my beautiful and elegant and lovely rippler
+		 * a maximally clever person could probably find a way to do both filters in
+		 * one pass but if I were maximally clever I would be doing something more useful". */
+		for (var i = width; i < (width * height) - width; i++) {
+			var value = fbData[i];
+			var oneToTheRight = fbData[i + 1];
+			value += oneToTheRight;
+			var oneToTheLeft = fbData[i - 1];
+			value += oneToTheLeft;
+			var oneRowUp = fbData[i - width];
+			value += oneRowUp;
+			var oneRowDown = fbData[i + width];
+			value += oneRowDown;
+			value = (value >> 5) - fbData[i];
+			value -= (fbData[i] >> 1);
+			/* this makes no sense. */
+			fbData[i] = value & 0xff;
+		}
+	}
+	frameCounter = (frameCounter + 1) % 9;
+	blitFramebuffer();
+}
+
+function blitFramebuffer() {
+	for (var i = 0; i < width * height; i++) {
+		var imgIndex = i << 2;
+		var value = fbData[i];
+		var color = palette[value];
+		imageDataData[imgIndex++] = (color >> 16) & 0xff;
+		imageDataData[imgIndex++] = (color >> 8) & 0xff;
+		imageDataData[imgIndex++] = (color) & 0xff;
+	}
+	ctx.putImageData(imageData, 0, 0);
+}
+setInterval(masterJump, 20);
+</script>
+</body>
+</html>
