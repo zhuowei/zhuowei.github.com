@@ -37,6 +37,9 @@ for (var i = 0; i < 0x100; i++) {
 	var red = (((i >> 1) | 8) + 60) & 0xff;
 	var green = (red - 60) & 0xff;
 	var blue = green;
+	red = (red << 2) & 0xff;
+	green = (green << 2) & 0xff;
+	blue = (blue << 2) & 0xff;
 	palette[i] = (red << 16) | (green << 8) | blue;
 }
 /* end palette. */
@@ -108,7 +111,7 @@ function blitFramebuffer() {
 	}
 	ctx.putImageData(imageData, 0, 0);
 }
-setInterval(masterJump, 20);
+setInterval(masterJump, 50);
 </script>
 </body>
 </html>
