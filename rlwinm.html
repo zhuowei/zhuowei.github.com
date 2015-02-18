@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rlwinm to C</title>
+</head>
+<body>
+<input id="maininput"><div id="mainoutput"></div>
+<script>
+function genMask(mb, me) {
+	var v = 0;
+	for (var i = mb; i <= me; i++) {
+		v |= (1 << i);
+	}
+	return v;
+}
+function translate(parts) {
+	var sh = parseInt(parts[2]);
+	var mb = parseInt(parts[3]);
+	var me = parseInt(parts[4]);
+	console.log(sh, mb, me);
+	var myMask = genMask(mb, me);
+	var myMaskStr = (0x10000 | ((myMask >>> 16) & 0xffff)).toString(16).substring(1) +
+		(0x10000 | (myMask & 0xffff)).toString(16).substring(1);
+	if (sh == 0) {
+		return parts[0] + " = " + parts[1] + " & 0x" + myMaskStr;
+	}
+	// simple left shift
+	if (mb == sh && me == 31-sh) { // simple shift
+		return parts[0] + " = (" + parts[1] + " << " + sh + ");";
+	}
+	if (mb == 32-sh && me == 31) { // simple right shift
+		return parts[0] + " = (" + parts[1] + " >> " + (32-sh) + ");";
+	}
+	// it's a rotation
+	return parts[0] + " = rotate32(" + parts[1] + ", " + sh + ") & 0x" + myMaskStr;
+
+}
+function doit(instr) {
+	// rlwinm  r0,r10,29,3,31
+	try {
+		var parts = instr.replace(/  /g, " ").split(" ")[1].split(",")
+		var response = translate(parts);
+		mainoutput.textContent = response;
+	} catch (e) {
+		console.log(e);
+	}
+}
+var maininput = document.getElementById("maininput");
+var mainoutput = document.getElementById("mainoutput");
+maininput.onkeyup=function(e) {
+	doit(maininput.value);
+}
+doit(maininput.value);
+</script>
+</body>
+</html>
