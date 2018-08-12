@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GimmeHTML - get highlighted source from Xcode</title>
+</head>
+<body>
+<p>1. copy your source from Xcode and paste into this box:</p>
+<div id="inputbox" style="border: solid 1px black;"></div>
+<p>2. get HTML source here:</p>
+<textarea id="outputbox" cols="80" rows="25"></textarea>
+<p>by <a href="https://twitter.com/zhuowei">@zhuowei</a>, based on <a href="https://twitter.com/modocache/status/1027328491593838592">@modocache's tweet</a>.</p>
+<script>
+var inputBox = document.getElementById("inputbox");
+var outputBox = document.getElementById("outputbox");
+inputBox.contentEditable = true;
+inputBox.addEventListener("input", function() {
+	outputBox.value = inputBox.innerHTML;
+});
+</script>
+</body>
+</html>
