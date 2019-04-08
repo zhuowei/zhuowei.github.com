@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Windows for Workgroups startup screen - HTML/CSS recreation</title>
+<style>
+html {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+body {
+	font-family: "Times New Roman", sans-serif;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+}
+#container {
+	position: relative;
+	width: 355px;
+	height: 425px;
+	padding: 0;
+	left: 50%;
+	top: 50%;
+	margin: -212px 0 0 -177px;
+	background-color: rgb(57,165,198);
+	box-shadow: inset 3px 3px rgb(115,185,222), inset -3px -3px rgb(57,132,165);
+}
+#microsoft {
+	font-size: 24px;
+	transform: scaleY(0.75) rotate(-90deg);
+	display: inline-block;
+	text-shadow: rgb(57,148,181) -4px 3px;
+	position: absolute;
+	left: 20px;
+	top: 226px;
+}
+#windows {
+	font-variant: small-caps;
+	font-size: 120px;
+	letter-spacing: -6px;
+	transform: scaleX(0.45);
+	text-shadow: rgb(57,148,181) 6px 4px;
+	display: inline-block;
+	position: absolute;
+	left: -44px;
+	top: 168px;
+}
+#windowstm {
+}
+#forworkgroups {
+	font-variant: small-caps;
+	font-size: 64px;
+	letter-spacing: -2px;
+	transform: scaleX(0.5);
+	text-shadow: rgb(57,148,181) 6px 4px;
+	width: 760px;
+	display: inline-block;
+	position: absolute;
+	left: -125px;
+	top: 268px;
+}
+#reallogo {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	display: none;
+}
+#version {
+	//font-weight: bold;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	transform: scaleX(0.9);
+	font-size: 20px;
+	text-shadow: rgb(57,148,181) 4px 4px;
+	position: absolute;
+	left: 0px;
+	top: 337px;
+}
+#copyright {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	font-size: 12px;
+	position: absolute;
+	left: 0px;
+	top: 380px;
+}
+#microsoft-reg {
+	font-size: 10px;
+}
+#windowslogo {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: Wingdings;
+	text-align: center;
+	font-size: 220px;
+	position: absolute;
+	top: -10px;
+}
+#innerborder {
+	position: absolute;
+	width: 330px;
+	height: 400px;
+	border: 1px solid rgb(57,132,165);
+	left: 12px;
+	top: 12px;
+}
+#innerborder2 {
+	position: absolute;
+	width: 330px;
+	height: 400px;
+	border: 1px solid rgb(115,185,222);
+	left: 13px;
+	top: 13px;
+}
+footer {
+	color: white;
+	font-family: sans-serif;
+	text-align: center;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	bottom: 30px;
+}
+a {
+	color: inherit;
+}
+</style>
+</head>
+<body>
+<div id="container">
+<div id="innerborder"></div>
+<div id="innerborder2"></div>
+<!--<img id="reallogo" src="logo.bmp">-->
+<div id="windowslogo">&#xf0ff;</div>
+<div id="microsoft">Microsoft<span id="microsoft-reg">&reg;</span></div>
+<div id="windows">Windows</div>
+<!--<div id="windowstm">&trade;</div>-->
+<div id="forworkgroups">for Workgroups</div>
+<div id="version">Version 3.11</div>
+<div id="copyright">Copyright &copy; Microsoft Corporation 1985-1993.<br>All rights reserved.</div>
+</div>
+<footer>Recreation of the <a href="https://cdn.arstechnica.net/wp-content/uploads/2013/07/win311logo.gif">Windows for Workgroups 3.11 startup screen</a> in HTML/CSS. Windows logo requires Wingdings font. Tested on Firefox 66.0.2 on Windows 10. By <a href="https://twitter.com/zhuowei">@zhuowei</a>.</footer>
+</body>
+</html>
