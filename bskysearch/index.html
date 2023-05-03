@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    max-width: 597px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.result {
+    padding: 12px;
+    border-bottom: 1px solid #eeeeee;
+}
+.username, .post-link {
+    font-size: 15px;
+    color: #808080;
+}
+.post-content {
+    font-size: 15px;
+    white-space: pre-wrap;
+}
+#searchform {
+    display: flex;
+}
+#searchbox {
+    flex: 2 1 auto;
+}
+h1 {
+    font-size: 20px;
+}
+</style>
+</head>
+<body>
+<h1>Bluesky search viewer</h1>
+<p>Calls Bluesky's official search API, then links the posts so you can view them on <a href="https://amazingca.dev">@Amazingca</a>'s unofficial Bluesky viewer.</p>
+<p>(Made by <a href="https://notnow.dev/zhuowei">@zhuowei</a> because Amazingca's viewer doesn't have search)</p>
+<form id="searchform"><input id="searchbox" placeholder="Search...""><input type="submit"></form>
+<div id="results"></div>
+<div id="results-template" class="result">
+    <div class="topbar"><a class="username"></a> <a class="post-link"></a></div>
+    <div class="post-content"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="bskysearch.js"></script>
+</body>
+</html>
